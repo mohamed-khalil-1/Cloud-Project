@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./HCI_project
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=staging
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=staging
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  backend:
+    build:
+      context: ./HCI_project_backend
+      dockerfile: Dockerfile
+    ports:
+      - "3501:3501"
+    environment:
+      - NODE_ENV=staging
+      - PORT=3501
+    env_file:
+      - ./HCI_project_backend/config/staging.env
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:3501/"]
+      interval: 1m
+      timeout: 10s
+      retries: 1
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+volumes:
+  mongodb_data:

@@ -1,0 +1,52 @@
+.nav-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    margin-top: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 10px 20px 10px 0;
+    margin-bottom: 1000px;
+    border-bottom:1px solid rgb(158, 158, 158) ;
+height: 72px;
+}
+.nav-container ul{
+    display: flex;
+    gap: 50px;
+    font-family: sans-serif;
+
+}
+.nav-container ul a{
+    padding: 12px;
+
+    transition: 0.3s;
+    border: 2px solid black;
+    color: black;
+    position: relative;
+}
+.nav-container ul a:hover{
+    background-color: black;
+    color: white;
+}
+.nav-container button{
+    background-color: transparent;
+    outline: none;
+    border: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #444141;
+    cursor: pointer;
+}
+.notification{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    top: 88%;
+    right: -5px;
+}

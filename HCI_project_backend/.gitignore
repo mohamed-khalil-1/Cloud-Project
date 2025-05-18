@@ -1,0 +1,45 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Angular build output
+HCI_project/dist/
+HCI_project/.angular/
+HCI_project/.output/
+HCI_project/.cache/
+HCI_project/.env
+HCI_project/.env.* # in case you have any
+
+# Backend build output
+HCI_project_backend/dist/
+HCI_project_backend/.env
+HCI_project_backend/.env.* # in case you have any
+
+# Environment files (secrets)
+.env
+.env.*
+HCI_project/src/environments/environment.*.ts.local
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker
+**/tmp/
+**/.docker/
+**/.dockerignore
+
+# VSCode/IDE
+.vscode/
+.idea/
+*.swp
+
+# Misc
+coverage/

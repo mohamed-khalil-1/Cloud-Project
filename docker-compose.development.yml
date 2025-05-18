@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./HCI_project
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
+    ports:
+      - "80:80"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    volumes:
+      - ./HCI_project:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  backend:
+    build:
+      context: ./HCI_project_backend
+      dockerfile: Dockerfile
+    ports:
+      - "3500:3500"
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - ./HCI_project_backend/config/development.env
+    volumes:
+      - ./HCI_project_backend:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3500/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  mongodb_data: 

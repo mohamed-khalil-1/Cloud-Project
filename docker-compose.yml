@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  frontend:
+    build: 
+      context: ./HCI_project
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV:-development}
+    ports: 
+      - "80:80"
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: 
+      context: ./HCI_project_backend
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=${NODE_ENV:-development}
+    ports: 
+      - "3500:3500"
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+      - MONGODB_URI=${MONGODB_URI:-mongodb://mongodb:27017/store}
+      - PORT=3500
+    env_file:
+      - ./HCI_project_backend/config/${NODE_ENV:-development}.env
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_${NODE_ENV:-development}:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb_data_development:
+  mongodb_data_staging:
+  mongodb_data_production:

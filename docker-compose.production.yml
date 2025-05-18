@@ -1,0 +1,69 @@
+version: '3.8'
+services:
+  frontend:
+    build: 
+      context: ./HCI_project
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
+    ports: 
+      - "8081:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+
+  backend:
+    build: 
+      context: ./HCI_project_backend
+      dockerfile: Dockerfile
+    ports: 
+      - "3502:3500"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./HCI_project_backend/config/production.env
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3500/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+          memory: 1G
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+
+networks:
+  app-network:
+    driver: bridge
