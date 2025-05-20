@@ -1,7 +1,10 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3501',
-  version: '1.0.0',
+  authApiUrl: 'http://localhost:4120',
+  productApiUrl: 'http://localhost:4121',
+  notificationApiUrl: 'http://localhost:4122',
+  wishlistApiUrl: 'http://localhost:4123',
+  chatApiUrl: 'http://localhost:4124',
   environmentName: 'Staging',
   environmentColor: '#FFA500', // Orange
   debugMode: true,
@@ -18,5 +21,6 @@ export const environment = {
     enableCors: true,
     enableRateLimit: true,
     enableHttps: false
-  }
+  },
+  version: '1.0.0'
 }; 

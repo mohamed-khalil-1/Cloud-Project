@@ -1,0 +1,36 @@
+# Node modules (all services and frontend)
+node_modules/
+services/*/node_modules/
+HCI_project/node_modules/
+
+# Build outputs
+HCI_project/dist/
+HCI_project/out-tsc/
+HCI_project/tmp/
+services/*/dist/
+services/*/tmp/
+
+# Logs
+*.log
+services/*/logs/
+HCI_project/logs/
+
+# Environment files
+.env
+.env.*
+services/*/.env
+HCI_project/.env
+
+# IDE/editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+coverage/
+.history/

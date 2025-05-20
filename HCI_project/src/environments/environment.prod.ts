@@ -1,23 +1,26 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://localhost:3502',
-  version: '1.0.0',
+  authApiUrl: 'http://localhost:4130',
+  productApiUrl: 'http://localhost:4131',
+  notificationApiUrl: 'http://localhost:4132',
+  wishlistApiUrl: 'http://localhost:4133',
+  chatApiUrl: 'http://localhost:4134',
   environmentName: 'Production',
   environmentColor: '#FF0000', // Red
-  debugMode: false,
-  showDebugInfo: false,
-  apiTimeout: 5000, // 5 seconds
+  debugMode: true,
+  showDebugInfo: true,
+  apiTimeout: 15000, // 15 seconds
   enableMockData: false,
-  // Production specific settings
   logging: {
-    level: 'error',
-    enableConsole: false,
+    level: 'info',
+    enableConsole: true,
     enableFile: true,
-    filePath: './logs/prod.log'
+    filePath: './logs/production.log'
   },
   security: {
     enableCors: true,
     enableRateLimit: true,
     enableHttps: false
-  }
+  },
+  version: '1.0.0'
 }; 

@@ -18,6 +18,13 @@ RUN npm ci && \
 # Copy source code
 COPY . .
 
+# Copy the correct environment file based on NODE_ENV
+RUN if [ "$NODE_ENV" = "production" ]; then \
+      cp src/environments/environment.prod.ts src/environments/environment.ts ; \
+    elif [ "$NODE_ENV" = "staging" ]; then \
+      cp src/environments/environment.staging.ts src/environments/environment.ts ; \
+    fi
+
 # Build the application with explicit environment
 RUN if [ "$NODE_ENV" = "production" ]; then \
         npm run build:prod; \

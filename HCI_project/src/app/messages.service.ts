@@ -6,7 +6,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class MessagesService {
-  private apiBaseUrl: string = environment.apiUrl;
+  private apiBaseUrl: string = environment.chatApiUrl;
 
   constructor() { }
 

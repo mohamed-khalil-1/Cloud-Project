@@ -1,68 +1,56 @@
 version: '3.8'
 services:
   frontend:
-    build: 
+    build:
       context: ./HCI_project
       dockerfile: Dockerfile
       args:
-        - NODE_ENV=production
-    ports: 
-      - "8081:80"
+        NODE_ENV: production
+    ports:
+      - "8083:80"
     environment:
       - NODE_ENV=production
     depends_on:
-      - backend
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:80/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '1'
-          memory: 1G
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
-        window: 120s
+      - auth-service
+      - product-service
+      - notification-service
+      - wishlist-service
+      - chat-service
 
-  backend:
-    build: 
-      context: ./HCI_project_backend
-      dockerfile: Dockerfile
-    ports: 
-      - "3502:3500"
-    environment:
-      - NODE_ENV=production
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "4130:4000"
     env_file:
-      - ./HCI_project_backend/config/production.env
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3500/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 2G
-        reservations:
-          cpus: '1'
-          memory: 1G
-      restart_policy:
-        condition: on-failure
-        max_attempts: 3
-        window: 120s
+      - ./services/auth-service/.env
+
+  product-service:
+    build: ./services/product-service
+    ports:
+      - "4131:4001"
+    env_file:
+      - ./services/product-service/.env
+
+  notification-service:
+    build: ./services/notification-service
+    ports:
+      - "4132:4002"
+    env_file:
+      - ./services/notification-service/.env
+
+  wishlist-service:
+    build: ./services/wishlist-service
+    ports:
+      - "4133:4003"
+    env_file:
+      - ./services/wishlist-service/.env
+
+  chat-service:
+    build: ./services/chat-service
+    ports:
+      - "4134:4004"
+    env_file:
+      - ./services/chat-service/.env
 
 networks:
   app-network:

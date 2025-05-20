@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class SellerInsightsService {
-  private baseUrl = environment.apiUrl;
+  private baseUrl = environment.productApiUrl;
 
   constructor() {}
 

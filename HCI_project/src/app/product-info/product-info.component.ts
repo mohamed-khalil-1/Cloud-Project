@@ -5,6 +5,7 @@ import axios from 'axios';
 import { AuthService } from '../auth-service.service';
 import { Router } from '@angular/router';
 import { WishlistService } from '../wishlist.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-product-info',
@@ -24,7 +25,7 @@ export class ProductInfoComponent {
   wishListSuccess:string=''
   wishListError:string=''
 
-  private apiBaseUrl: string = 'http://localhost:3500';
+  private apiBaseUrl: string = environment.productApiUrl;
 
   constructor(private productService:ProductsServiceService,private route: ActivatedRoute,private auth:AuthService,private router2: Router,private wishlistServ:WishlistService){}
   ngOnInit(): void {
