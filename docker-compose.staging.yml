@@ -23,6 +23,8 @@ services:
       - "4120:4000"
     env_file:
       - ./services/auth-service/.env
+    depends_on:
+      - mongodb
 
   product-service:
     build: ./services/product-service
@@ -30,6 +32,8 @@ services:
       - "4121:4001"
     env_file:
       - ./services/product-service/.env
+    depends_on:
+      - mongodb
 
   notification-service:
     build: ./services/notification-service
@@ -37,6 +41,8 @@ services:
       - "4122:4002"
     env_file:
       - ./services/notification-service/.env
+    depends_on:
+      - mongodb
 
   wishlist-service:
     build: ./services/wishlist-service
@@ -44,6 +50,8 @@ services:
       - "4123:4003"
     env_file:
       - ./services/wishlist-service/.env
+    depends_on:
+      - mongodb
 
   chat-service:
     build: ./services/chat-service
@@ -51,6 +59,15 @@ services:
       - "4124:4004"
     env_file:
       - ./services/chat-service/.env
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:6
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
 
 volumes:
   mongodb_data:
