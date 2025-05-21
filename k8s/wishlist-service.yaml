@@ -20,7 +20,7 @@ spec:
         - containerPort: 4003
         env:
         - name: MONGODB_URI
-          value: "mongodb://mongodb:27017/wishlist"
+          value: "mongodb+srv://khalil:ukzwimpcv8mzCYpt@cluster0.gje5dvf.mongodb.net/wishlist"
        
 ---
 apiVersion: v1

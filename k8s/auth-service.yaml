@@ -20,7 +20,7 @@ spec:
         - containerPort: 4000
         env:
         - name: MONGODB_URI
-          value: "mongodb://mongodb:27017/auth"
+          value: "mongodb+srv://khalil:ukzwimpcv8mzCYpt@cluster0.gje5dvf.mongodb.net/auth"
 ---
 apiVersion: v1
 kind: Service

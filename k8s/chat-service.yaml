@@ -20,7 +20,7 @@ spec:
         - containerPort: 4004
         env:
         - name: MONGODB_URI
-          value: "mongodb://mongodb:27017/chat"
+          value: "mongodb+srv://khalil:ukzwimpcv8mzCYpt@cluster0.gje5dvf.mongodb.net/chat"
         
 ---
 apiVersion: v1
