@@ -131,6 +131,50 @@ docker-compose -f docker-compose.production.yml down
 
 ---
 
+### 4.1. Creating Kubernetes Secrets for MongoDB URIs (Required!)
+
+Before deploying to Kubernetes, you must create secrets for each service's MongoDB connection string. This keeps your credentials safe and out of version control.
+
+**Run these commands in your terminal (PowerShell or bash):**
+
+```sh
+kubectl create secret generic auth-mongodb-uri-secret --from-literal=MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.gje5dvf.mongodb.net/auth"
+kubectl create secret generic product-mongodb-uri-secret --from-literal=MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.gje5dvf.mongodb.net/product"
+kubectl create secret generic notification-mongodb-uri-secret --from-literal=MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.gje5dvf.mongodb.net/notification"
+kubectl create secret generic wishlist-mongodb-uri-secret --from-literal=MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.gje5dvf.mongodb.net/wishlist"
+kubectl create secret generic chat-mongodb-uri-secret --from-literal=MONGODB_URI="mongodb+srv://<user>:<password>@cluster0.gje5dvf.mongodb.net/chat"
+```
+
+- Replace `<user>` and `<password>` with your MongoDB Atlas credentials.
+- You only need to do this once per cluster (unless you want to update the credentials).
+
+**How the Deployments use these secrets:**
+
+Each service's deployment YAML references its secret like this:
+
+```yaml
+env:
+- name: MONGODB_URI
+  valueFrom:
+    secretKeyRef:
+      name: <service>-mongodb-uri-secret
+      key: MONGODB_URI
+```
+
+For example, in `k8s/auth-service.yaml`:
+```yaml
+env:
+- name: MONGODB_URI
+  valueFrom:
+    secretKeyRef:
+      name: auth-mongodb-uri-secret
+      key: MONGODB_URI
+```
+
+**If you skip this step, your services will fail to start because they won't have the database connection string!**
+
+---
+
 ## Environment Variables
 
 - **Do not commit your `.env` files or secrets to version control!**
