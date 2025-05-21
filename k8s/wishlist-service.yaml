@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishlist-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wishlist-service
+  template:
+    metadata:
+      labels:
+        app: wishlist-service
+    spec:
+      containers:
+      - name: wishlist-service
+        image: cloudproject-wishlist-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4003
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://mongodb:27017/wishlist"
+       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wishlist-service
+spec:
+  selector:
+    app: wishlist-service
+  ports:
+    - protocol: TCP
+      port: 4003
+      targetPort: 4003
+      nodePort: 31237
+  type: NodePort

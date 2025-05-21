@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: cloudproject-product-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4001
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://mongodb:27017/product"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+spec:
+  selector:
+    app: product-service
+  ports:
+    - protocol: TCP
+      port: 4001
+      targetPort: 4001
+      nodePort: 31235
+  type: NodePort

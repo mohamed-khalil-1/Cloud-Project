@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+
 const app = express();
 const PORT = process.env.PORT || 4002;
 
@@ -22,3 +23,4 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Routes
 app.use('/notification', require('./routers/notification'));
+

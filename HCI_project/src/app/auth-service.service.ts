@@ -8,7 +8,9 @@ import { environment } from '../environments/environment';
 export class AuthService {
   private apiBaseUrl = environment.authApiUrl; 
 
-  constructor() {}
+  constructor() {
+    console.log('Auth API URL:', this.apiBaseUrl);
+  }
 
   async registerUser(userData: any): Promise<any> {
     try {
